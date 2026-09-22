@@ -1,0 +1,1 @@
+import { createClient } from '@supabase/supabase-js'; const supabase = createClient('https://plcsxegmakwrkuexgguz.supabase.co', 'sb_secret_UQpZ0bfAA3r2ooEsYPgOMA_JoJfs39B'); async function test() { const { data, error } = await supabase.from('sales').select().limit(1); console.log(error ? 'Conexi¢n fallida: ' + error.message : 'Conexi¢n OK') } test() 
