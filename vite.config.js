@@ -9,8 +9,7 @@ export default defineConfig({
   },
   preview: {
     host: '0.0.0.0',
-    port: 10000,
-    allowedHosts: ['renata-crm-v4.onrender.com', 'localhost']
+    port: 10000
   },
   build: {
     outDir: 'dist'
