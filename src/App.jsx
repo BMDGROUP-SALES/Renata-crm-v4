@@ -2,6 +2,17 @@ import { useState } from 'react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('admin');
+  const [montoVenta, setMontoVenta] = useState('');
+  const [comisionPorcentaje, setComisionPorcentaje] = useState(1.2);
+  const [comisionCalculada, setComisionCalculada] = useState(0);
+
+  const calcularComision = () => {
+    if (montoVenta && !isNaN(montoVenta)) {
+      const monto = parseFloat(montoVenta);
+      const comision = (monto * comisionPorcentaje) / 100;
+      setComisionCalculada(comision);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
@@ -99,23 +110,30 @@ export default function App() {
                 <input
                   type="number"
                   placeholder="Ingrese el monto"
+                  value={montoVenta}
+                  onChange={(e) => setMontoVenta(e.target.value)}
                   className="w-full bg-slate-600 border border-slate-500 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
                 />
               </div>
               <div>
                 <label className="block text-slate-300 font-semibold mb-2">Porcentaje de Comisión</label>
-                <select className="w-full bg-slate-600 border border-slate-500 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500">
-                  <option>1.2% - Comisión Estándar</option>
-                  <option>0.8% - Comisión Reducida</option>
-                  <option>3.0% - Comisión Premium</option>
+                <select
+                  value={comisionPorcentaje}
+                  onChange={(e) => setComisionPorcentaje(parseFloat(e.target.value))}
+                  className="w-full bg-slate-600 border border-slate-500 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500">
+                  <option value="1.2">1.2% - Comisión Estándar</option>
+                  <option value="0.8">0.8% - Comisión Reducida</option>
+                  <option value="3.0">3.0% - Comisión Premium</option>
                 </select>
               </div>
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all">
+              <button
+                onClick={calcularComision}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all">
                 Calcular Comisión
               </button>
               <div className="bg-slate-600 p-4 rounded-lg border border-green-500">
                 <p className="text-slate-300 text-sm mb-1">Comisión Total:</p>
-                <p className="text-3xl font-bold text-green-400">$0.00</p>
+                <p className="text-3xl font-bold text-green-400">${comisionCalculada.toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
               </div>
             </div>
           </div>
